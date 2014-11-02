@@ -94,11 +94,11 @@ module.exports.async = function(mod, callback) {
 }
 
 /*
-  Returns a module synchronously. Returns undefined if none is found.
+  Returns a module synchronously. Returns def param if none is found.
   @method sync
   @param {String}
 */
-module.exports.sync = function(mod) {
+module.exports.sync = function(mod, def) {
   mod = mod || '';
   var fullPath = buildPath(mod);
   var pathsToTry = possiblePaths(fullPath);
@@ -106,5 +106,7 @@ module.exports.sync = function(mod) {
 
   if (pathToUse !== null) {
     return require(pathToUse);
+  } else {
+    return def;
   }
 }
