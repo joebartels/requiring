@@ -1,0 +1,21 @@
+{
+  "name": "requires",
+  "version": "0.0.1",
+  "description": "require modules sync and async.",
+  "main": "index.js",
+  "keywords": [
+    "require"
+  ],
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.1"
+  },
+  "repository": "https://github.com/joebartels/requiring.git",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "author": "joseph bartels",
+  "license": "MIT"
+}
