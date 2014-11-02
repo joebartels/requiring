@@ -2,10 +2,17 @@
 var assert = require('assert');
 var requiring = require('./');
 
-it('requiring.sync should return undefined when no module exists', function() {
+it('requiring.sync should return undefined when no module exists and no default param passed', function() {
   var testModule = requiring.sync('./dontexist');
 
   assert.deepEqual(testModule, undefined, 'Module not found and returns undefined');
+});
+
+it('requiring.sync should return default value when no module exists and a default param is passed', function() {
+  var testModule = requiring.sync('./dontexist', 'no module here');
+
+  assert.deepEqual(typeof testModule, 'string', 'Module not found and returns the correct default type');
+  assert.deepEqual(testModule, 'no module here', 'Module not found and returns default value');
 });
 
 it('requiring.sync should return the module if it exists', function() {
