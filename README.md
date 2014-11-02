@@ -1,6 +1,7 @@
-requiring
+requiring [![Build Status](https://travis-ci.org/joebartels/requiring.svg?branch=master)](https://travis-ci.org/joebartels/requiring)
 =========
-Main use case is to avoid errors when requiring local files that may not exist.
+Main use case is to avoid errors when requiring files from **current working directory** that may not exist.
+e.g. You want to build a module that reads a config file from the user's project root (*not* node_modules/my-module/ directory).
 
 This only works on local files -not core modules or modules installed in *node_modules* directory
 
@@ -22,6 +23,9 @@ requiring.async('./cool-tool', function(err, mod) {
 #####require a module sync
 ```javascript
 var coolTool = requiring.sync('./cool-tool'); // undefined if there is no 'cool-tool'
+
+// pass a default value to return if no module is found
+var configFile = requiring.sync('./config-file', {}); //returns {} if there is no 'config-file'
 ```
 
 #####other info
@@ -29,4 +33,4 @@ This utility attempts to resolve using a full path so `requiring('./cool-tool');
 
 It will validate the path before requiring the module. If no file extension is given, it validates the path in this order: `./cool-tool`, `./cool-tool.js`, `./cool-tool.json`, `./cool-took.node`
 
-requiring a module async is really just validating the path async, then requiring the module sync. 
+requiring a module async is really just validating the path async, then requiring the module sync.
