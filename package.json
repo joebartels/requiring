@@ -14,7 +14,10 @@
   "devDependencies": {
     "mocha": "^2.0.1"
   },
-  "repository": "https://github.com/joebartels/requiring.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joebartels/requiring.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
