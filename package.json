@@ -1,10 +1,12 @@
 {
-  "name": "requires",
+  "name": "requiring",
   "version": "0.0.1",
-  "description": "require modules sync and async.",
+  "description": "Requiring modules sync or async, existent or non.",
   "main": "index.js",
   "keywords": [
-    "require"
+    "require",
+    "modules",
+    "async modules"
   ],
   "scripts": {
     "test": "mocha"
