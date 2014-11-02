@@ -3,13 +3,12 @@ var fs    = require('fs');
 var path  = require('path');
 
 /*
-  If no file extension exists, it creates an array of possible files:
-  filePath, filePath.js, filePath.json, filePath.node
-  @method possiblePaths
+  uses the relative path to build the full path of the requested file.
+  the current working directory is used as the base.
+  @method buildPath
   @private
-  @param {String} mod
+  @param {String} mod The default is './' if left blank
   @return {String}
-  @default {String}
 */
 function buildPath(mod) {
   mod = mod || './';
@@ -19,13 +18,12 @@ function buildPath(mod) {
 }
 
 /*
-  If no file extension exists, it creates an array of possible files:
+  If no file extension exists, it creates an array of possible paths:
   filePath, filePath.js, filePath.json, filePath.node
   @method possiblePaths
   @private
   @param {String} filePath
-  @return {Array} the path
-  @default []
+  @return {Array} an array of possible paths in the order they should be checked.
 */
 function possiblePaths(filePath) {
   if (!path.extname(filePath)) {
