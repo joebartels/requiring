@@ -61,3 +61,17 @@ it('requiring.async should return the main file from package.json in the callbac
     done();
   });
 });
+
+it('requiring.async should not be sync', function(done) {
+  var finished = false;
+
+  requiring.async('./test/dummy', function(err, testModule) {
+    finished = true
+  });
+  assert.deepEqual(finished, false, 'Callback not triggered yet');
+
+  setTimeout(function() {
+    assert.deepEqual(finished, true, 'Callback triggered out of sync');
+    done()
+  }, 10);
+});
