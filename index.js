@@ -79,6 +79,7 @@ function actualPath(possiblePaths, def) {
 */
 module.exports.async = function(mod, callback) {
   mod = mod || '';
+  var ret;
   var fullPath = buildPath(mod);
   var pathsToTry = possiblePaths(fullPath);
   var pathToUse = actualPath(pathsToTry, fullPath);
@@ -87,7 +88,7 @@ module.exports.async = function(mod, callback) {
     if (err !== null) {
       return callback(err);
     } else {
-      var ret = require(fullPath);
+      ret = require(fullPath);
       return callback(null, ret);
     }
   });
