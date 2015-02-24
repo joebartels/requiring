@@ -8,7 +8,9 @@ This only works on file & folder modules -not core modules or modules installed 
 `npm install requiring`
 
 `npm test`
-#####require a module async
+
+####require a module async
+
 ```javascript
 var requiring = require('requiring');
 
@@ -20,7 +22,8 @@ requiring.async('./cool-tool', function(err, mod) {
 });
 ```
 
-#####require a module sync
+####require a module sync
+
 ```javascript
 var coolTool = requiring.sync('./cool-tool'); // undefined if there is no 'cool-tool'
 
@@ -28,7 +31,8 @@ var coolTool = requiring.sync('./cool-tool'); // undefined if there is no 'cool-
 var configFile = requiring.sync('./config-file', {}); //returns {} if there is no 'config-file'
 ```
 
-#####other info
+####other info
+
 This utility attempts to resolve using a full path so `requiring('./cool-tool');` turns into something like this  `requiring('/Users/johndoe/projects/my-project/cool-tool');`
 
 It will validate the path before requiring the module. If no file extension is given, it validates the path in this order: `./cool-tool`, `./cool-tool.js`, `./cool-tool.json`, `./cool-took.node`
