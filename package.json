@@ -1,6 +1,6 @@
 {
   "name": "requiring",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Requiring modules sync or async, existent or non.",
   "main": "index.js",
   "keywords": [
