@@ -3,6 +3,29 @@ var fs    = require('fs');
 var path  = require('path');
 
 /*
+  Determines if file exists and can be read with calling process
+  @method canReadFile
+  @private
+  @param {String} filePath the path to test for read access
+  @return {String}
+*/
+function canReadFile(filePath) {
+  var exists;
+  if (fs.accessSync) {
+    try {
+      exists = 'undefined' === typeof fs.accessSync(filePath, fs.R_OK);
+    } catch (error) {
+      exists = false;
+    }
+  // node 0.10
+  } else {
+    exists = fs.existsSync(filePath);
+  }
+
+  return exists;
+}
+
+/*
   uses the relative path to build the full path of the requested file.
   the current working directory is used as the base.
   @method buildPath
@@ -54,7 +77,7 @@ function actualPath(possiblePaths, def) {
   var pathToUse = def;
 
   for (var i = 0; i < possiblePaths.length; i++) {
-    if (fs.existsSync(possiblePaths[i])) {
+    if (canReadFile(possiblePaths[i])) {
       pathToUse = possiblePaths[i];
       break;
     }

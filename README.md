@@ -37,8 +37,10 @@ This utility attempts to resolve using a full path so `requiring('./cool-tool');
 
 It will validate the path before requiring the module. If no file extension is given, it validates the path in this order: `./cool-tool`, `./cool-tool.js`, `./cool-tool.json`, `./cool-took.node`
 
-for the case of `./cool-tool` This utility will leverage node's module loading pattern and look for *./cool-tool/index.js* or the `main` file defined in *./cool-tool/package.json* 
+for the case of `./cool-tool` This utility will leverage node's module loading pattern and look for *./cool-tool/index.js* or the `main` file defined in *./cool-tool/package.json*
 
 requiring a module async is really just validating the path async, then requiring the module sync.
 
-All paths passed to `requiring(path)` are looked for **relative** to the **current working directory** 
+All paths passed to `requiring(path)` are looked for **relative** to the **current working directory**
+
+*supports iojs and is backwards compatible with at least node v0.10.0*
