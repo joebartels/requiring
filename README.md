@@ -20,6 +20,17 @@ requiring.async('./cool-tool', function(err, mod) {
   }
   mod.doStuff();
 });
+
+// specify a different base directory to look for a module (default is current working directory)
+requiring.async('./another-tool', {
+  directory: __dirname // `__dirname` returns directory of current executing script.
+}, function(err, mod) {
+  if (err !== null) {
+    return console.log(err);
+  }
+  mod.doStuff();
+});
+
 ```
 
 ####require a module sync
@@ -29,11 +40,19 @@ var coolTool = requiring.sync('./cool-tool'); // undefined if there is no 'cool-
 
 // pass a default value to return if no module is found
 var configFile = requiring.sync('./config-file', {}); //returns {} if there is no 'config-file'
+
+// specify a different base directory to look for a module (default is current working directory)
+var anotherTool = requiring.sync('./another-tool', {
+  directory: __dirname // path is resolved via `path.resolve()`
+});
+
 ```
 
 ####other info
 
 This utility attempts to resolve using a full path so `requiring('./cool-tool');` turns into something like this  `requiring('/Users/johndoe/projects/my-project/cool-tool');`
+
+To specify a different base directory use the `options` hash which is passed in as 2nd parameter in both `sync` and `async` *(see examples)* **(TO BE CHANGED IN 0.1.0)**.
 
 It will validate the path before requiring the module. If no file extension is given, it validates the path in this order: `./cool-tool`, `./cool-tool.js`, `./cool-tool.json`, `./cool-took.node`
 
