@@ -1,0 +1,11 @@
+{
+  "name": "dummy-package-2",
+  "version": "0.0.2",
+  "description": "dummy package.json used for testing from another directory",
+  "main": "entry-point-2.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}

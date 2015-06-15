@@ -11,12 +11,15 @@ var path  = require('path');
 */
 function canReadFile(filePath) {
   var exists;
+
   if (fs.accessSync) {
+
     try {
       exists = 'undefined' === typeof fs.accessSync(filePath, fs.R_OK);
     } catch (error) {
       exists = false;
     }
+
   // node 0.10
   } else {
     exists = fs.existsSync(filePath);
@@ -31,12 +34,19 @@ function canReadFile(filePath) {
   @method buildPath
   @private
   @param {String} mod The default is './' if left blank
+  @param {Object} options Options passed
   @return {String}
 */
-function buildPath(mod) {
+function buildPath(mod, baseDirectory) {
   mod = mod || './';
-  var dir = process.cwd();
+
+  if (baseDirectory) {
+    var absolutePath = path.resolve(baseDirectory);
+  }
+
+  var dir = absolutePath || process.cwd();
   var fullPath = path.join(dir, mod);
+
   return fullPath;
 }
 
@@ -49,7 +59,9 @@ function buildPath(mod) {
   @return {Array} an array of possible paths in the order they should be checked.
 */
 function possiblePaths(filePath) {
+
   if (!path.extname(filePath)) {
+
     return [
         filePath,
         filePath+'.js',
@@ -77,11 +89,13 @@ function actualPath(possiblePaths, def) {
   var pathToUse = def;
 
   for (var i = 0; i < possiblePaths.length; i++) {
+
     if (canReadFile(possiblePaths[i])) {
       pathToUse = possiblePaths[i];
       break;
     }
   }
+
   return pathToUse;
 }
 
@@ -100,10 +114,16 @@ function actualPath(possiblePaths, def) {
   @param {String} mod The module to require.
   @param {Function} callback The callback to use.
 */
-module.exports.async = function(mod, callback) {
+module.exports.async = function(mod, options, callback) {
   mod = mod || '';
+
+  if (arguments.length === 2) {
+    callback = options;
+    options = {};
+  }
+
   var ret;
-  var fullPath = buildPath(mod);
+  var fullPath = buildPath(mod, options.directory);
   var pathsToTry = possiblePaths(fullPath);
   var pathToUse = actualPath(pathsToTry, fullPath);
 
@@ -112,19 +132,39 @@ module.exports.async = function(mod, callback) {
       return callback(err);
     } else {
       ret = require(fullPath);
+
       return callback(null, ret);
     }
   });
 }
 
+// sync('path', {directory: 'Users'}, {});
+// sync('path', {directory: 'Users'});
+// sync('path', {});
+// sync('path');
+
 /*
   Returns a module synchronously. Returns def param if none is found.
+
   @method sync
   @param {String}
+  @param {Object} options 
+  @param {Mixed} def The default object to return (can be any type);
 */
-module.exports.sync = function(mod, def) {
+module.exports.sync = function(mod, options, def) {
   mod = mod || '';
-  var fullPath = buildPath(mod);
+  options = options || {};
+
+  if (arguments.length === 1) {
+    options = {};
+  }
+
+  // hacky duck typing TODO: remove in 0.1.0
+  if (arguments.length === 2 && options && !options.directory) {
+    def = options;
+  }
+
+  var fullPath = buildPath(mod, options.directory);
   var pathsToTry = possiblePaths(fullPath);
   var pathToUse = actualPath(pathsToTry)
 

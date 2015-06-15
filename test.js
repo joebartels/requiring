@@ -31,6 +31,16 @@ it('requiring.sync should return the main file from the package.json', function(
   assert.deepEqual(ret, 'I am the main file', 'The correct module is returned');
 });
 
+it('requiring.sync should respect `directory` option and return the main file from the package.json', function() {
+  var testModule = requiring.sync('./', {
+    directory: './tests_2'
+  });
+  var ret = testModule();
+
+  assert.deepEqual(typeof testModule, 'function', 'The module is a function');
+  assert.deepEqual(ret, 'I am the main file from another_directory', 'The correct module is returned');
+});
+
 it('requiring.async should return an error in the callback when no module exists', function(done) {
   requiring.async('./dontexist', function(err, testModule) {
 
@@ -58,6 +68,19 @@ it('requiring.async should return the main file from package.json in the callbac
     assert.ifError(err);
     assert.deepEqual(typeof testModule, 'function', 'The module is a function');
     assert.deepEqual(ret, 'I am the main file', 'Callback recieves the correct module');
+    done();
+  });
+});
+
+it('requiring.async should respect `directory` option and return the main file from package.json in the callback', function(done) {
+  requiring.async('./', {
+    directory: './tests_2'
+  }, function(err, testModule) {
+    var ret = testModule();
+
+    assert.ifError(err);
+    assert.deepEqual(typeof testModule, 'function', 'The module is a function');
+    assert.deepEqual(ret, 'I am the main file from another_directory', 'Callback recieves the correct module');
     done();
   });
 });
