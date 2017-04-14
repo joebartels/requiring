@@ -1,6 +1,6 @@
 CHANGELOG.md
 
-#####v0.0.5
+#### v0.0.5
 [FEATURE] an options hash can be passed into `async` and `sync` where you can 
           specify a `directory` to use as base directory for searching.
 
