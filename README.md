@@ -9,7 +9,7 @@ This only works on file & folder modules -not core modules or modules installed 
 
 `npm test`
 
-####require a module async
+### require a module async
 
 ```javascript
 var requiring = require('requiring');
@@ -33,7 +33,7 @@ requiring.async('./another-tool', {
 
 ```
 
-####require a module sync
+### require a module sync
 
 ```javascript
 var coolTool = requiring.sync('./cool-tool'); // undefined if there is no 'cool-tool'
@@ -48,7 +48,7 @@ var anotherTool = requiring.sync('./another-tool', {
 
 ```
 
-####other info
+### other info
 
 This utility attempts to resolve using a full path so `requiring('./cool-tool');` turns into something like this  `requiring('/Users/johndoe/projects/my-project/cool-tool');`
 
